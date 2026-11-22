@@ -16,21 +16,43 @@ Devuelve un máximo de seis párrafos o puntos, salvo petición expresa de mayor
 """
 
 
-def run_ai_analysis(df, question: str, api_key: str, model: str = "gpt-4.1-mini") -> str:
+def run_ai_analysis(df, question: str, api_key: str, model: str = "gemini-2.5-flash") -> str:
+    """Genera análisis usando Gemini con datos comerciales agregados."""
     if not api_key:
-        raise ValueError("Falta la clave API de la IA.")
+        raise ValueError("Falta la clave de Gemini.")
     if not question.strip():
         raise ValueError("Escribe una pregunta comercial.")
-    from openai import OpenAI
-    client = OpenAI(api_key=api_key, timeout=45)
+
+    import urllib.request
+    import urllib.error
+
     payload = llm_aggregates(df)
-    reply = client.chat.completions.create(
-        model=model,
-        messages=[
-            {"role":"system", "content":BASE_INSTRUCTIONS},
-            {"role":"user", "content": "Pregunta del director comercial:\n" + question.strip() + "\n\nEstadísticas calculadas a partir del dashboard:\n" + json.dumps(payload, ensure_ascii=False, default=str)},
-        ],
-        temperature=0.2,
-        max_tokens=1000,
+    body = {
+        "system_instruction": {"parts": [{"text": BASE_INSTRUCTIONS}]},
+        "contents": [{"role": "user", "parts": [{"text": (
+            "Pregunta del director comercial:\n" + question.strip() +
+            "\n\nEstadísticas calculadas del dashboard:\n" +
+            json.dumps(payload, ensure_ascii=False, default=str)
+        )}]}],
+        "generationConfig": {"temperature": 0.2, "maxOutputTokens": 1400},
+    }
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+    req = urllib.request.Request(
+        url,
+        data=json.dumps(body, ensure_ascii=False).encode("utf-8"),
+        headers={"Content-Type": "application/json", "x-goog-api-key": api_key},
+        method="POST",
     )
-    return reply.choices[0].message.content or "El modelo no ha devuelto texto."
+    try:
+        with urllib.request.urlopen(req, timeout=60) as response:
+            result = json.load(response)
+    except urllib.error.HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace")[:800]
+        raise RuntimeError(f"Gemini devolvió HTTP {exc.code}: {detail}") from None
+
+    text_parts = [
+        part.get("text", "")
+        for candidate in result.get("candidates", [])
+        for part in candidate.get("content", {}).get("parts", [])
+    ]
+    return "\n".join(x for x in text_parts if x).strip() or "Gemini no ha devuelto texto."
