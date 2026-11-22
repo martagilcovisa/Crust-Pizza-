@@ -1,0 +1,7 @@
+PASO 1: crea un repositorio GitHub en https://github.com/new
+PASO 2: descomprime este ZIP y sube sus ARCHIVOS y CARPETAS al repositorio (Add file / Upload files).
+PASO 3: entra en https://share.streamlit.io/ con GitHub; Create app / Yup, I have an app / app.py / Deploy.
+PASO 4: abre la URL publica streamlit.app y comprueba el dashboard.
+PASO 5: para IA generativa, configura OPENAI_API_KEY en los Secrets de Streamlit; no compartas la clave.
+
+El Excel de clientes incluido para publicar no contiene nombres ni otros datos personales; se conservaron solo los ID y el segmento.

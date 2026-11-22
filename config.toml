@@ -1,0 +1,9 @@
+[theme]
+primaryColor = "#A3714F"
+backgroundColor = "#F7F3ED"
+secondaryBackgroundColor = "#FFFDFA"
+textColor = "#493629"
+font = "sans serif"
+
+[server]
+maxUploadSize = 100

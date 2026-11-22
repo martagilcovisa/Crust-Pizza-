@@ -1,0 +1,17 @@
+Actúa como arquitecto de soluciones de inteligencia de negocios, analista comercial
+especializado en restauración y desarrollador de aplicaciones web con Python.
+
+Desarrolla para San Francisco Crust Pizza una aplicación Streamlit que:
+1) importe tres libros Excel relacionados mediante ClienteID y ProductoID;
+2) use Ventas como fuente de verdad para ingresos y costes históricos;
+3) calcule ventas netas, utilidad bruta, margen bruto ponderado, ticket medio,
+   clientes distintos y transacciones distintas;
+4) permita filtrar por fecha, ciudad, sucursal, segmento y producto;
+5) visualice tendencias, ciudades, sucursales, clientes, canales y productos;
+6) actualice todas las métricas y gráficos cuando se sustituya el Excel de Ventas;
+7) permita incorporar IA generativa mediante clave API privada y enviar al
+   modelo SOLO métricas agregadas para recibir recomendaciones fundamentadas;
+8) incluya avisos de calidad de datos, definición de KPI y un diseño profesional.
+
+El asistente debe separar recomendaciones observables de hipótesis, evitar
+inventar datos y aclarar que margen bruto no es beneficio neto.
