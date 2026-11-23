@@ -16,7 +16,7 @@ Devuelve un máximo de seis párrafos o puntos, salvo petición expresa de mayor
 """
 
 
-def run_ai_analysis(df, question: str, api_key: str, model: str = "gemini-2.5-flash") -> str:
+def run_ai_analysis(df, question: str, api_key: str, model: str = "ggemini-3.5-flash-lite") -> str:
     """Genera análisis usando Gemini con datos comerciales agregados."""
     if not api_key:
         raise ValueError("Falta la clave de Gemini.")
