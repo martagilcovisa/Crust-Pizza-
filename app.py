@@ -381,7 +381,7 @@ with tabs[5]:
     except Exception:
         pass
     if not api_key:
-api_key = st.text_input("Clave API de Gemini (opcional; solo durante tu sesión)", type="password",key="gemini_key",help="No se guarda en los Excel ni en el proyecto.")    question = st.text_area("¿Qué quieres analizar?",value="Propón cinco decisiones comerciales, ordenadas por prioridad, apoyándote en los datos del periodo seleccionado. Incluye riesgos y cómo medir resultados.",height=120,key="ia_question")
+    api_key = st.text_input("Clave API de Gemini (opcional; solo durante tu sesión)", type="password",key="gemini_key",help="No se guarda en los Excel ni en el proyecto.")    question = st.text_area("¿Qué quieres analizar?",value="Propón cinco decisiones comerciales, ordenadas por prioridad, apoyándote en los datos del periodo seleccionado. Incluye riesgos y cómo medir resultados.",height=120,key="ia_question")
     if st.button("✦ Generar recomendaciones con IA", type="primary", disabled=not bool(api_key), key="generate_ai"):
         try:
             with st.spinner("Analizando las métricas agregadas..."):
